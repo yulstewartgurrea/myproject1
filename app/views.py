@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.contrib.auth import login, authenticate, logout 
-from .forms import RegistrationForm
+from .forms import RegistrationForm, ShopOwnerRegistrationForm
 from .models import MyUser
 # Create your views here.
 
@@ -15,10 +15,10 @@ def register_user(request):
         else:        
             form = RegistrationForm()
 
-	return render(request, 'register.html', {'form': form})
+	return render(request, 'registration/register.html', {'form': form})
 
 def register_done(request):
-	return render(request, 'register_done.html')
+	return render(request, 'registration/register_done.html')
 
 
 def login_user(request):
@@ -40,14 +40,14 @@ def login_user(request):
 	elif request.user.is_authenticated():
 		return redirect('home')
 
-	return render(request, 'login.html')
+	return render(request, 'registration/login.html')
 
 def logout_user(request):
 	"""
 	Logout View
 	"""
 	logout(request)
-	return render(request, 'logout.html')
+	return render(request, 'registration/logout.html')
 
 def home(request):
 	if request.user.is_authenticated():
@@ -55,9 +55,9 @@ def home(request):
 		if user.is_admin:
 			return redirect('admin_dashboard')
 		if user.is_ShopOwner:
-			return redirect('shopowner')
+			return redirect('shopowner_dashboard')
 		if user.is_Customer:
-			return redirect('customer')
+			return redirect('shop')
 
 ############################################################################
 ############################################################################
@@ -66,18 +66,59 @@ def home(request):
 def admin_dashboard(request):
 	if request.user.is_authenticated() and request.user.is_admin:
 		admin = MyUser.object.get(pk=request.user.id)
-		return render(request, 'admin.html', {'admin': admin})
+		return render(request, 'admin/admin.html', {'admin': admin})
 	else:
 		return redirect('home')
 
+def add_user(request):
+	form = ShopOwnerRegistrationForm()
+	if request.method == 'POST' and request.user.is_admin:
+		form = ShopOwnerRegistrationForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return redirect('/')
+	else:
+		form = ShopOwnerRegistrationForm()
+	return render('/')
+
+def add_category(request):
+	if request.method =='POST' and request.user.is_admin:
+		form = AddCategoryForm()
+		if form.is_valid():
+			form.save(commit=False)
+			return redirect('add_category')
+	elif request.user.is_admin:
+		form = AddCategoryForm()
+		category = Category.objects.all()
+	return render(request, 'admin/category.html', {'form': form, 'category': category})
+
+def delete_catagory(request, pk):
+	if request.user.is_admin:
+		category = Category.objects.get(pk=pk)
+		category.is_active = False
+		category.save()
+		return redirect('add_category')
+	else:
+		return redirect('home')
+
+def update_category(request, pk):
+	category = get_object_404(Category, pk=pk)
+	form = AddCategoryForm(request.POST or None, instance=category)
+	if request.method == 'POST':
+		category.cname = request.POST.get('cname')
+		category.save()
+		return redirect('add_category')
+
+# def view_category(request):
+
 ############################################################################
 ############################################################################
 ############################################################################
 
-def shopowner(request):
+def shopowner_dashboard(request):
 	if request.user.is_authenticated() and request.user.is_ShopOwner:
 		shopowner = MyUser.object.get(pk=request.user.id)
-		return render(request, 'shopowner.html')
+		return render(request, 'shopowner/shopowner.html')
 	else:
 		return redirect('home')
 
@@ -85,7 +126,7 @@ def shopowner(request):
 ############################################################################
 ############################################################################
 
-def customer(request):
+def shop(request):
 	if request.user.is_authenticated() and request.user.is_Customer:
 		customer = MyUser.object.get(pk=request.user.id)
 		return render(request, 'shop.html')

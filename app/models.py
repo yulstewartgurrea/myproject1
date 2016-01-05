@@ -79,6 +79,10 @@ class Category(models.Model):
     cname = models.CharField(max_length=120)
     is_active = models.BooleanField(default=True)
 
+    def __unicode__(self):
+        return cname
+
+
 class Product(models.Model):
     is_active = models.BooleanField(default=True)
     cid = models.ForeignKey(Category)
