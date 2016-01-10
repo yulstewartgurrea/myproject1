@@ -1,5 +1,5 @@
 from django import forms
-from .models import MyUser, Category
+from .models import MyUser, Category, Product
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 
@@ -38,3 +38,10 @@ class AddCategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['cname']
+
+class AddProductForm(forms.ModelForm):
+    cid = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
+    owner = forms.ModelChoiceField(queryset=MyUser.object.filter(is_ShopOwner=True, is_active=True))
+    class Meta:
+        model = Product
+        fields = ['pname', 'description', 'cid', 'owner']

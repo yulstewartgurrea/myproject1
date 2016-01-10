@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.contrib.auth import login, authenticate, logout 
-from .forms import RegistrationForm, ShopOwnerRegistrationForm, AddCategoryForm
-from .models import MyUser, MyUserManager, Category
+from .forms import RegistrationForm, ShopOwnerRegistrationForm, AddCategoryForm, AddProductForm
+from .models import MyUser, MyUserManager, Category, Product
 # Create your views here.
 
 def register_user(request):
@@ -67,7 +67,7 @@ def home(request):
 
 ############################################################################
 ############################################################################
-############################################################################
+#####################   ADMIN ADMIN ADMIN  #################################
 
 def admin_dashboard(request):
 	if request.user.is_authenticated() and request.user.is_admin:
@@ -122,6 +122,17 @@ def update_category(request, pk):
 		return redirect('add_category')
 
 # def view_category(request):
+
+def add_product(request):
+	if request.method == 'POST' and request.user.is_admin:
+		form = AddProductForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return redirect('add_product')
+	elif request.user.is_admin:
+		form = AddProductForm()
+
+	return render(request, 'admin/addproduct.html', {'form': form})
 
 ############################################################################
 ############################################################################

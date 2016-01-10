@@ -6,7 +6,8 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns('',
 	url(r'^admin/dashboard/$', 'app.views.admin_dashboard', name='admin_dashboard'),
 	url(r'^admin/user/add/$', 'app.views.add_user', name='add_user'),
-	url(r'^admin/category/$', 'app.views.add_category', name='add_category')
+	url(r'^admin/category/$', 'app.views.add_category', name='add_category'),
+	url(r'^admin/product/add/$', 'app.views.add_product', name='add_product')
 
 
 

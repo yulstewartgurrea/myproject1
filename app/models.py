@@ -77,6 +77,9 @@ class Shop(models.Model):
     sid = models.ForeignKey(MyUser)
     is_active = models.BooleanField(default=True)
 
+    def __unicode__(self):
+        return self.sname
+
 class Category(models.Model):
     cname = models.CharField(max_length=120)
     is_active = models.BooleanField(default=True)
@@ -89,7 +92,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     is_active = models.BooleanField(default=True)
-    cid = models.ForeignKey(Category)
+    cid = models.ManyToManyField(Category)
     owner = models.ForeignKey(MyUser)
     pname = models.CharField(max_length=120)
     description = models.CharField(max_length=500)
