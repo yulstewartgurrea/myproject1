@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.contrib.auth import login, authenticate, logout 
 from .forms import RegistrationForm, ShopOwnerRegistrationForm
-from .models import MyUser
+from .models import MyUser, MyUserManager
 # Create your views here.
 
 def register_user(request):
@@ -78,6 +78,7 @@ def admin_dashboard(request):
 
 def add_user(request):
 	form = ShopOwnerRegistrationForm()
+	user = MyUser.object.all()
 	if request.method == 'POST' and request.user.is_admin:
 		form = ShopOwnerRegistrationForm(request.POST)
 		if form.is_valid():
@@ -85,7 +86,8 @@ def add_user(request):
 		return redirect('add_user')
 	else:
 		form = ShopOwnerRegistrationForm()
-	return render(request, 'admin/adduser.html', {'form': form})
+	return render(request, 'admin/adduser.html', {'form': form, 'user': user})
+
 
 def add_category(request):
 	if request.method =='POST' and request.user.is_admin:

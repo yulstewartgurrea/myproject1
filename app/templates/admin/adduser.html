@@ -1,9 +1,25 @@
 {%extends 'admin/admin.html'%}
 {%block content%}
 <h1>Add User </h1>
+<legend></legend>
 <form method="post">{%csrf_token%}
 	{{form.as_p}}
 	<button type="submit" value="Submit"> Add </button>
 </form>
+<legend>User List</legend>
+<table border=2>
+	<thead>
+		<tr>
+			<th>Email</th>
+			<th>Shop</th>
+		<tr>
+	</thead>
 
+	{%for user in user%}
+	<tr>
+		<td>{{user.email}}</td>
+	</tr>
+	{%endfor%}
+	</thead>
+</table>
 {%endblock%}
