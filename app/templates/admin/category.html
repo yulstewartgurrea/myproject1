@@ -1,0 +1,27 @@
+{%extends 'admin/admin.html'%}
+{%block content%}
+<h1> Add Category </h1>
+<legend></legend>
+<form method="post">{%csrf_token%}
+	{{form.as_p}}
+	<button type="submit" value="Submit"> Add </button>
+</form>
+
+<h1>Category List</h1>
+<legend></legend>
+<table border=2>
+	<thead>
+		<tr>
+			<th>Category</th>
+		<tr>
+	</thead>
+
+	{%for category in category%}
+	<tr>
+		<td>{{category.cname}}</td>
+	</tr>
+	{%endfor%}
+	</thead>
+</table>
+
+{%endblock%}

@@ -56,12 +56,14 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['email']
+
     def get_full_name(self):
         return self.fname +" "+ self.lname
 
     def get_short_name(self):
         return self.fname 
-
 
     object = MyUserManager()
 
@@ -79,9 +81,11 @@ class Category(models.Model):
     cname = models.CharField(max_length=120)
     is_active = models.BooleanField(default=True)
 
-    def __unicode__(self):
-        return cname
+    class Meta:
+        ordering = ['cname']
 
+    def __unicode__(self):
+        return self.cname
 
 class Product(models.Model):
     is_active = models.BooleanField(default=True)

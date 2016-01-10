@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.contrib.auth import login, authenticate, logout 
-from .forms import RegistrationForm, ShopOwnerRegistrationForm
-from .models import MyUser, MyUserManager
+from .forms import RegistrationForm, ShopOwnerRegistrationForm, AddCategoryForm
+from .models import MyUser, MyUserManager, Category
 # Create your views here.
 
 def register_user(request):
@@ -78,7 +78,9 @@ def admin_dashboard(request):
 
 def add_user(request):
 	form = ShopOwnerRegistrationForm()
-	user = MyUser.object.all()
+	user = MyUser.object.filter(is_admin=True)
+	user2 = MyUser.object.filter(is_ShopOwner=True)
+	user3 = MyUser.object.filter(is_Customer=True)
 	if request.method == 'POST' and request.user.is_admin:
 		form = ShopOwnerRegistrationForm(request.POST)
 		if form.is_valid():
@@ -86,18 +88,20 @@ def add_user(request):
 		return redirect('add_user')
 	else:
 		form = ShopOwnerRegistrationForm()
-	return render(request, 'admin/adduser.html', {'form': form, 'user': user})
+	return render(request, 'admin/adduser.html', {'form': form, 'user': user, 'user2':user2, 'user3':user3})
 
 
 def add_category(request):
 	if request.method =='POST' and request.user.is_admin:
-		form = AddCategoryForm()
+		form = AddCategoryForm(request.POST)
 		if form.is_valid():
-			form.save(commit=False)
+			c = form.save(commit=False)
+			c.save()
 			return redirect('add_category')
 	elif request.user.is_admin:
 		form = AddCategoryForm()
-		category = Category.objects.all()
+
+	category = Category.objects.all()
 	return render(request, 'admin/category.html', {'form': form, 'category': category})
 
 def delete_catagory(request, pk):

@@ -6,7 +6,12 @@
 	{{form.as_p}}
 	<button type="submit" value="Submit"> Add </button>
 </form>
-<legend>User List</legend>
+
+<legend></legend>
+
+<h1>User List</h1>
+
+<h3>Admin</h3>
 <table border=2>
 	<thead>
 		<tr>
@@ -22,4 +27,43 @@
 	{%endfor%}
 	</thead>
 </table>
+
+<legend></legend>
+
+<h3>Shop Owners</h3>
+<table border=2>
+	<thead>
+		<tr>
+			<th>Email</th>
+			<th>Shop</th>
+		<tr>
+	</thead>
+
+	{%for user in user2%}
+	<tr>
+		<td>{{user.email}}</td>
+	</tr>
+	{%endfor%}
+	</thead>
+</table>
+
+<legend></legend>
+
+<h3>Customers</h3>
+<table border=2>
+	<thead>
+		<tr>
+			<th>Email</th>
+			<th>Shop</th>
+		<tr>
+	</thead>
+
+	{%for user in user3%}
+	<tr>
+		<td>{{user.email}}</td>
+	</tr>
+	{%endfor%}
+	</thead>
+</table>
+
 {%endblock%}
