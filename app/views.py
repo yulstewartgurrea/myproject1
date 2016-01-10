@@ -85,7 +85,7 @@ def add_user(request):
 		return redirect('add_user')
 	else:
 		form = ShopOwnerRegistrationForm()
-	return render('')
+	return render(request, 'admin/adduser.html', {'form': form})
 
 def add_category(request):
 	if request.method =='POST' and request.user.is_admin:

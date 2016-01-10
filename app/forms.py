@@ -25,7 +25,7 @@ class ShopOwnerRegistrationForm(UserCreationForm):
         fields = ('email', 'password1', 'password2')
 
     def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
+        user = super(ShopOwnerRegistrationForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
         user.is_active=True
         user.is_ShopOwner=True
