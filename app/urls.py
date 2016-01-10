@@ -5,14 +5,11 @@ urlpatterns = patterns('',
     url(r'^register_done/$', 'app.views.register_done', name='register_done'),
     url(r'^login/$', 'app.views.login_user', name='login_user'),
     url(r'^logout/$', 'app.views.logout_user', name='logout_user'),
-    url(r'^admin/dashboard/$', 'app.views.admin_dashboard', name='admin_dashboard'),
     url(r'^shopowner/dashboard/$', 'app.views.shopowner_dashboard', name='shopowner_dashboard'),
     url(r'^shop/$', 'app.views.shop', name='shop'),
     url(r'^home/$', 'app.views.home', name='home'),
 
-############################################################################
-############################################################################
-########################     ADMIN          ################################
+
     
 ############################################################################
 ############################################################################
@@ -21,4 +18,17 @@ urlpatterns = patterns('',
 ############################################################################
 ############################################################################
 ########################     SHOP           ################################
+)
+
+############################################################################
+############################################################################
+########################     ADMIN          ################################
+urlpatterns += patterns('',
+	url(r'^admin/dashboard/$', 'app.views.admin_dashboard', name='admin_dashboard'),
+	url(r'^admin/dashboard/user/add/$,', 'app.views.add_user', name='add_user'),
+
+
+
+
+
 )

@@ -6,6 +6,9 @@ from .models import MyUser
 # Create your views here.
 
 def register_user(request):
+	"""
+	Register User
+	"""
 	form = RegistrationForm()
 	if request.method == 'POST':
 		form = RegistrationForm(request.POST)
@@ -50,6 +53,9 @@ def logout_user(request):
 	return render(request, 'registration/logout.html')
 
 def home(request):
+	"""
+	Redirects user by authority
+	"""
 	if request.user.is_authenticated():
 		user = MyUser.object.get(pk=request.user.id)
 		if user.is_admin:
@@ -76,10 +82,10 @@ def add_user(request):
 		form = ShopOwnerRegistrationForm(request.POST)
 		if form.is_valid():
 			form.save()
-		return redirect('/')
+		return redirect('add_user')
 	else:
 		form = ShopOwnerRegistrationForm()
-	return render('/')
+	return render('')
 
 def add_category(request):
 	if request.method =='POST' and request.user.is_admin:
