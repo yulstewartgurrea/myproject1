@@ -71,6 +71,12 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 ############################################################################
 ############################################################################
 
+class Gender(models.Model):
+    gender = models.CharField(max_length=120, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.gender
 
 class Shop(models.Model):
     sname = models.CharField(max_length=120, null=True, blank=True)
