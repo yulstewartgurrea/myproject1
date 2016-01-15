@@ -165,6 +165,12 @@ def sview_product(request):
 		product = Product.objects.filter(owner=shopowner, is_active=True)
 		return render(request, 'shopowner/viewproduct.html', {'product': product, 'shopowner': shopowner})
 
+def sview_productdetails(request):
+	if request.user.is_ShopOwner:
+		shopowner = Myuser.object.get(pk=request.user.id)
+		product = Product.objects.filter(owner = shopowner, is_active=True)
+		return render(request, 'shopowner/viewproductdetails.html', {'product':product, 'shopowner':shopowner})
+
 def supdate_product(request, pk):
 	if request.user.is_ShopOwner:
 		cid = request.POST.get('cname')

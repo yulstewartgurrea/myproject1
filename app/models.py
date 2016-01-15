@@ -79,12 +79,12 @@ class Gender(models.Model):
         return self.gender
 
 class Classification(models.Model):
-    classification = models.CharField(max_length=120, null=True, blank=True)
+    classname = models.CharField(max_length=120, null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.classification
-        
+
 class Shop(models.Model):
     sname = models.CharField(max_length=120, null=True, blank=True)
     sid = models.ForeignKey(MyUser)
@@ -110,6 +110,17 @@ class Product(models.Model):
     pname = models.CharField(max_length=120)
     description = models.TextField(max_length=500)
     dateadded = models.DateTimeField(default=timezone.now())
+    sex = models.ForeignKey(Gender)
+
+    def __unicode__(self):
+        return self.pname
+
+class Color(models.Model):
+    colorname = models.CharField(max_length=120)
+    is_active = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.colorname
 
 # class Image(models.Model):
 #     img1 = models.ImageField(upload_to=generate_filename)

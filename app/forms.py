@@ -37,6 +37,19 @@ class ShopOwnerRegistrationForm(UserCreationForm):
             user.save()
         return user
 
+class AddGenderForm(forms.ModelForm):
+    gender = forms.CharField(label="Gender")
+
+    class Meta:
+        model = Gender
+        fields = ['gender']
+
+class AddClassificationForm(forms.ModelForm):
+    classname = forms.CharField(label="Classification")
+    class Meta:
+        model = Classification
+        fields = ['classname']
+
 
 class AddCategoryForm(forms.ModelForm):
     cname = forms.CharField(label="Category")
@@ -48,9 +61,10 @@ class AddProductForm(forms.ModelForm):
     pname = forms.CharField(label="Product Name")
     cid = forms.ModelMultipleChoiceField(label="Category",widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
     owner = forms.ModelChoiceField(label="Shop Owner",queryset=MyUser.object.filter(is_ShopOwner=True, is_active=True))
+    sex = forms.ModelChoiceField(label="Gender", queryset=Gender.object.all())
     class Meta:
         model = Product
-        fields = ['pname', 'description', 'cid', 'owner']
+        fields = ['pname', 'description', 'cid', 'owner', 'sex']
 
 ########################################################################################################
 ########################################################################################################
@@ -59,6 +73,7 @@ class AddProductForm(forms.ModelForm):
 class SAddProductForm(forms.ModelForm):
     cid = forms.ModelMultipleChoiceField(label="Category",widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
     pname = forms.CharField(label="Product Name")
+    sex = forms.ModelChoiceField(label="Gender", widget=ChoiceField, queryset=Gender.objects.all())
     class Meta:
         model = Product
-        fields = ['pname', 'description', 'cid']
+        fields = ['pname', 'description', 'cid', 'sex']
