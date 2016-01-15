@@ -1,0 +1,11 @@
+{%extends 'shopowner/shopowner.html'%}
+{%block content %}
+<h1>View Product</h1>
+<legend></legend>
+
+{%for product in product%}
+
+{{product.pname}}
+
+{%endfor%}
+{%endblock%}

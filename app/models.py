@@ -95,8 +95,17 @@ class Product(models.Model):
     cid = models.ManyToManyField(Category)
     owner = models.ForeignKey(MyUser)
     pname = models.CharField(max_length=120)
-    description = models.CharField(max_length=500)
+    description = models.TextField(max_length=500)
     dateadded = models.DateTimeField(default=timezone.now())
+
+# class Image(models.Model):
+#     img1 = models.ImageField(upload_to=generate_filename)
+#     img2 = models.ImageField(upload_to=generate_filename)
+#     img3 = models.ImageField(upload_to=generate_filename)
+#     img4 = models.ImageField(upload_to=generate_filename)
+#     img5 = models.ImageField(upload_to=generate_filename)
+#     pid = models.ForeignKey(Product)
+
 
 
 # class Cart(models.Model)

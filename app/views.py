@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth import login, authenticate, logout 
-from .forms import RegistrationForm, ShopOwnerRegistrationForm, AddCategoryForm, AddProductForm
-from .models import MyUser, MyUserManager, Category, Product
+from .forms import *
+from .models import *
 # Create your views here.
 
 def register_user(request):
@@ -141,9 +141,54 @@ def add_product(request):
 def shopowner_dashboard(request):
 	if request.user.is_authenticated() and request.user.is_ShopOwner:
 		shopowner = MyUser.object.get(pk=request.user.id)
-		return render(request, 'shopowner/shopowner.html')
+		return render(request, 'shopowner/shopowner.html', {'shopowner': shopowner})
 	else:
 		return redirect('home')
+
+def sadd_product(request):
+	form = SAddProductForm()
+	shopowner = MyUser.object.get(pk=request.user.id)
+	if request.method == 'POST' and request.user.is_ShopOwner:
+		form = SAddProductForm(request.POST)
+		if form.is_valid():
+			frm = form.save(commit=False)
+			shopowner = MyUser.object.get(pk=request.user.id)
+			frm.owner = shopowner
+			frm.save()
+			return redirect('sadd_product')
+
+	return render(request, 'shopowner/addproduct.html',{'form':form, 'shopowner': shopowner})
+
+def sview_product(request):
+	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
+		product = Product.objects.filter(owner=shopowner, is_active=True)
+		return render(request, 'shopowner/viewproduct.html', {'product': product, 'shopowner': shopowner})
+
+def supdate_product(request, pk):
+	if request.user.is_ShopOwner:
+		cid = request.POST.get('cname')
+		product = get_object_404(Product, pk=pk)
+		form = AddProductForm(request.POST or None, instance=product )
+		if request.method == 'POST':
+			form = AddProductForm(request.POST)
+			if form.is_valid:
+				product.pname = request.POST.get('pname')
+				product.description = request.POST.get('description')
+				product.save()
+				return redirect('/')
+
+	return render(request, 'shopowner/updateproduct.html', {'form': form})
+
+def delete_product(request, pk):
+	if request.user.is_ShopOwner:
+		product = get_object_404(Product, pk=pk)
+		if request.method == 'POST':
+			product.delete()
+			return redirect('/')
+
+	return render(request, 'shopowner/deleteproduct.html', {'product': product})
+
 
 ############################################################################
 ############################################################################

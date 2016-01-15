@@ -15,7 +15,9 @@ urlpatterns = patterns('',
 
 )
 
-
+############################################################################
+############################################################################
+########################     REGISTRATION   ################################
 urlpatterns += patterns('',
     url(r'^register/$', 'app.views.register_user', name='register_user'),
     url(r'^register_done/$', 'app.views.register_done', name='register_done'),
@@ -27,17 +29,25 @@ urlpatterns += patterns('',
 
 
     
-############################################################################
-############################################################################
-########################     SHOPOWNER      ################################
+
 
 ############################################################################
 ############################################################################
 ########################     SHOP           ################################
 
+
+)
+
 ############################################################################
 ############################################################################
-########################     REGISTRATION   ################################
+########################     SHOPOWNER      ################################
+urlpatterns += patterns('',
+	url(r'^shopowner/dashboard/$', 'app.views.shopowner_dashboard', name='shopowner_dashboard'),
+	url(r'^shopowner/product/add/$', 'app.views.sadd_product', name='sadd_product'),
+	url(r'^shopowner/product/view/$', 'app.views.sview_product', name='sview_product'),
+	# url(r'^shopowner/product/edit/$', 'app.views.shopowner_dashboard', name='sadd_edit'),
+	# url(r'^shopowner/product/delete/$', 'app.views.shopowner_dashboard', name='sadd_delete'),
+
 )
 
 

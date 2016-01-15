@@ -3,6 +3,10 @@ from .models import MyUser, Category, Product
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 
+########################################################################################################
+########################################################################################################
+###################################     ADMIN FORMS       ##############################################
+
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     class Meta:
@@ -35,13 +39,26 @@ class ShopOwnerRegistrationForm(UserCreationForm):
 
 
 class AddCategoryForm(forms.ModelForm):
+    cname = forms.CharField(label="Category")
     class Meta:
         model = Category
         fields = ['cname']
 
 class AddProductForm(forms.ModelForm):
-    cid = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
-    owner = forms.ModelChoiceField(queryset=MyUser.object.filter(is_ShopOwner=True, is_active=True))
+    pname = forms.CharField(label="Product Name")
+    cid = forms.ModelMultipleChoiceField(label="Category",widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
+    owner = forms.ModelChoiceField(label="Shop Owner",queryset=MyUser.object.filter(is_ShopOwner=True, is_active=True))
     class Meta:
         model = Product
         fields = ['pname', 'description', 'cid', 'owner']
+
+########################################################################################################
+########################################################################################################
+###################################   SHOPOWNER FORMS     ##############################################
+
+class SAddProductForm(forms.ModelForm):
+    cid = forms.ModelMultipleChoiceField(label="Category",widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
+    pname = forms.CharField(label="Product Name")
+    class Meta:
+        model = Product
+        fields = ['pname', 'description', 'cid']
