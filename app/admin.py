@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import MyUser, Shop, Category, Product
+from .models import *
 
 
 class UserCreationForm(forms.ModelForm):
@@ -88,3 +88,5 @@ admin.site.unregister(Group)
 admin.site.register(Shop)
 admin.site.register(Category)
 admin.site.register(Product)
+admin.site.register(Classification)
+admin.site.register(Gender)
