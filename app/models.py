@@ -78,6 +78,13 @@ class Gender(models.Model):
     def __unicode__(self):
         return self.gender
 
+class Classification(models.Model):
+    classification = models.CharField(max_length=120, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.classification
+        
 class Shop(models.Model):
     sname = models.CharField(max_length=120, null=True, blank=True)
     sid = models.ForeignKey(MyUser)
