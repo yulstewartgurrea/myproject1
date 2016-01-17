@@ -47,8 +47,9 @@ urlpatterns += patterns('',
 	url(r'^shopowner/product/view/$', 'app.views.sview_product', name='sview_product'),
 	url(r'^shopowner/product/view/(?P<pk>\d+)/$', 'app.views.sview_productdetails', name='sview_productdetails' ),
 	url(r'^shopowner/category/$', 'app.views.sview_category', name='sview_category'),
-	url(r'^shopowner/category/(?P<category_id>\d+)/$', 'app.views.sview_productbycategory', name='sview_productbycategory')
-	# url(r'^shopowner/product/edit/$', 'app.views.shopowner_dashboard', name='sadd_edit'),
+	url(r'^shopowner/category/(?P<category_id>\d+)/$', 'app.views.sview_productbycategory', name='sview_productbycategory'),
+	url(r'^shopowner/product/update/(?P<pk>\d+)/$', 'app.views.supdate_product', name='supdate_product'),
+	url(r'^shopowner/product/delete/(?P<pk>\d+)/$', 'app.views.sdelete_product', name='sdelete_product'),
 	# url(r'^shopowner/product/delete/$', 'app.views.shopowner_dashboard', name='sadd_delete'),
 
 )

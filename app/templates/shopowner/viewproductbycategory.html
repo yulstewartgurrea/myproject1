@@ -4,7 +4,7 @@
 <legend></legend>
 
 {%for product in product%}
-{{product.pname}}
+<a href="/shopowner/product/view/{{product.id}}">{{product.pname}}</a>
 
 {%endfor%}
 {%endblock%}

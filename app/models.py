@@ -4,6 +4,7 @@ from datetime import time
 from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from decimal import Decimal
 
 
 ############################################################################
@@ -71,6 +72,35 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 ############################################################################
 ############################################################################
 
+class UserProf(models.Model):
+    fname = models.CharField(max_length=120)
+    lname = models.CharField(max_length=120)
+    # dp = models.ImageField()
+    acct = models.ForeignKey(MyUser)
+    is_active=models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.fname + " " + self.lname
+
+class BillingAdress(models.Model):
+    postalcode = models.CharField(max_length=120)
+    country = models.CharField(max_length=120)
+    city = models.CharField(max_length=120)
+    state = models.CharField(max_length=120)
+    pnum = models.CharField(max_length=120)
+    acct = models.ForeignKey(MyUser)
+    is_active=models.BooleanField(default=True)
+
+class PermanentAddress(models.Model):
+    postalcode = models.CharField(max_length=120)
+    country = models.CharField(max_length=120)
+    city = models.CharField(max_length=120)
+    state = models.CharField(max_length=120)
+    state = models.CharField(max_length=120)
+    pnum = models.CharField(max_length=120)
+    acct = models.ForeignKey(MyUser)
+    is_active=models.BooleanField(default=True)
+
 class Gender(models.Model):
     gender = models.CharField(max_length=120, null=True, blank=True)
     is_active = models.BooleanField(default=True)
@@ -122,6 +152,13 @@ class Color(models.Model):
 
     def __unicode__(self):
         return self.colorname
+
+class PriceRange(models.Model):
+    price = models.DecimalField(max_digits=20,  decimal_places=2)
+    is_active = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.price
 
 # class Image(models.Model):
 #     img1 = models.ImageField(upload_to=generate_filename)

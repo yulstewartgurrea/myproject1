@@ -190,18 +190,29 @@ def sview_productdetails(request, pk):
 
 def supdate_product(request, pk):
 	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
 		cid = request.POST.get('cname')
 		product = get_object_or_404(Product, pk=pk)
-		form = AddProductForm(request.POST or None, instance=product )
+		form = SAddProductForm(request.POST or None, instance=product)
 		if request.method == 'POST':
-			form = AddProductForm(request.POST)
+			form = SAddProductForm(request.POST, instance=product)
 			if form.is_valid:
-				product.pname = request.POST.get('pname')
-				product.description = request.POST.get('description')
-				product.save()
-				return redirect('/')
+				# product.pname = request.POST.get('pname')
+				# product.description = request.POST.get('description')
+				# product.is_active = request.POST.get('is_active')
+				# product.dateadded = request.POST.get('dateadded')
+				# product.sex = request.POST.get('sex')
+				# product.cid = request.POST.get('cid')
+				# shopowner = MyUser.object.get(pk=request.user.id)
+				# product.owner=shopowner
+				# product.save()
+				shopowner = MyUser.object.get(pk=request.user.id)
+				frm = form.save(commit=False)
+				frm.owner = shopowner
+				frm.save()
+				return redirect('sview_product')
 
-	return render(request, 'shopowner/updateproduct.html', {'form': form})
+	return render(request, 'shopowner/updateproduct.html', {'form': form, 'product': product, 'shopowner': shopowner})
 
 def delete_product(request, pk):
 	if request.user.is_ShopOwner:

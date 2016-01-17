@@ -75,6 +75,7 @@ class SAddProductForm(forms.ModelForm):
     cid = forms.ModelChoiceField(label="Category", queryset=Category.objects.all())
     pname = forms.CharField(label="Product Name")
     sex = forms.ModelChoiceField(label="Gender", queryset=Gender.objects.all())
+    # is_active = forms.BooleanField()
     class Meta:
         model = Product
         fields = ['pname', 'description', 'cid', 'sex']
