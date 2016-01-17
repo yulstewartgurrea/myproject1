@@ -214,14 +214,15 @@ def supdate_product(request, pk):
 
 	return render(request, 'shopowner/updateproduct.html', {'form': form, 'product': product, 'shopowner': shopowner})
 
-def delete_product(request, pk):
+def sdelete_product(request, pk):
 	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
 		product = get_object_or_404(Product, pk=pk)
 		if request.method == 'POST':
 			product.delete()
-			return redirect('/')
+			return redirect('sview_product')
 
-	return render(request, 'shopowner/deleteproduct.html', {'product': product})
+	return render(request, 'shopowner/deleteproduct.html', {'product': product, 'shopowner': shopowner})
 
 def sview_productbycategory(request, category_id):
 	if request.user.is_ShopOwner:
