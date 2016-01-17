@@ -1,0 +1,11 @@
+{%extends 'shopowner/shopowner.html'%}
+{%block content%}
+<h1>Categories</h1>
+<legend></legend>
+
+{%for category in category%}
+<a href="/shopowner/category/{{category.id}}">{{category.cname}}
+
+{%endfor%}
+
+{%endblock%}

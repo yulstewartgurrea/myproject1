@@ -1,5 +1,5 @@
 from django import forms
-from .models import MyUser, Category, Product
+from .models import *
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 
@@ -61,7 +61,7 @@ class AddProductForm(forms.ModelForm):
     pname = forms.CharField(label="Product Name")
     cid = forms.ModelMultipleChoiceField(label="Category",widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
     owner = forms.ModelChoiceField(label="Shop Owner",queryset=MyUser.object.filter(is_ShopOwner=True, is_active=True))
-    sex = forms.ModelChoiceField(label="Gender", queryset=Gender.object.all())
+    sex = forms.ModelChoiceField(label="Gender", queryset=Gender.objects.all())
     class Meta:
         model = Product
         fields = ['pname', 'description', 'cid', 'owner', 'sex']
@@ -71,9 +71,10 @@ class AddProductForm(forms.ModelForm):
 ###################################   SHOPOWNER FORMS     ##############################################
 
 class SAddProductForm(forms.ModelForm):
-    cid = forms.ModelMultipleChoiceField(label="Category",widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
+    # cid = forms.ModelMultipleChoiceField(label="Category",widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
+    cid = forms.ModelChoiceField(label="Category", queryset=Category.objects.all())
     pname = forms.CharField(label="Product Name")
-    sex = forms.ModelChoiceField(label="Gender", widget=ChoiceField, queryset=Gender.objects.all())
+    sex = forms.ModelChoiceField(label="Gender", queryset=Gender.objects.all())
     class Meta:
         model = Product
         fields = ['pname', 'description', 'cid', 'sex']

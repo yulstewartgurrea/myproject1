@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.contrib.auth import login, authenticate, logout 
 from .forms import *
 from .models import *
+from django.utils import timezone
 # Create your views here.
 
 def register_user(request):
@@ -136,7 +137,7 @@ def add_product(request):
 
 ############################################################################
 ############################################################################
-############################################################################
+#####################SHOP OWNER SHOP OWNER##################################
 
 def shopowner_dashboard(request):
 	if request.user.is_authenticated() and request.user.is_ShopOwner:
@@ -145,17 +146,33 @@ def shopowner_dashboard(request):
 	else:
 		return redirect('home')
 
+def sview_category(request):
+	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
+		category = Category.objects.all()
+		return render(request, 'shopowner/viewcategory.html', {'shopowner': shopowner, 'category':category})
+
 def sadd_product(request):
 	form = SAddProductForm()
+	cid = request.POST.get('cname')
 	shopowner = MyUser.object.get(pk=request.user.id)
+	sex = request.POST.get('gender')
 	if request.method == 'POST' and request.user.is_ShopOwner:
 		form = SAddProductForm(request.POST)
 		if form.is_valid():
 			frm = form.save(commit=False)
 			shopowner = MyUser.object.get(pk=request.user.id)
+			# gid = Gender.objects.get(pk=sex_id)
+			# category = Category.objects.get(pk=cid_id)
 			frm.owner = shopowner
+			# frm.cid.add(category)
 			frm.save()
+			# p = Product(pname=request.POST.get('pname'), description=request.POST.get('description'), is_active=True,
+			# 	owner=shopowner, dateadded=request.POST.get('dateadded'), cid=category)
+			# p.save()
 			return redirect('sadd_product')
+		else:
+			form = SAddProductForm(request.POST)
 
 	return render(request, 'shopowner/addproduct.html',{'form':form, 'shopowner': shopowner})
 
@@ -194,6 +211,12 @@ def delete_product(request, pk):
 			return redirect('/')
 
 	return render(request, 'shopowner/deleteproduct.html', {'product': product})
+
+def sview_productbycategory(request, category_id):
+	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
+		product = Product.objects.filter(cid=category_id, owner=shopowner)
+		return render(request, 'shopowner/viewproductbycategory.html', {'product': product, 'shopowner': shopowner})
 
 
 ############################################################################

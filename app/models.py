@@ -105,12 +105,13 @@ class Category(models.Model):
 
 class Product(models.Model):
     is_active = models.BooleanField(default=True)
-    cid = models.ManyToManyField(Category)
+    cid = models.ForeignKey(Category, null=True, blank=True)
+    # cid = models.ManyToManyField(Category)
     owner = models.ForeignKey(MyUser)
     pname = models.CharField(max_length=120)
     description = models.TextField(max_length=500)
     dateadded = models.DateTimeField(default=timezone.now())
-    sex = models.ForeignKey(Gender)
+    sex = models.ForeignKey(Gender, null=True, blank=True)
 
     def __unicode__(self):
         return self.pname
