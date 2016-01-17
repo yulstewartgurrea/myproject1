@@ -182,16 +182,16 @@ def sview_product(request):
 		product = Product.objects.filter(owner=shopowner, is_active=True)
 		return render(request, 'shopowner/viewproduct.html', {'product': product, 'shopowner': shopowner})
 
-def sview_productdetails(request):
+def sview_productdetails(request, pk):
 	if request.user.is_ShopOwner:
-		shopowner = Myuser.object.get(pk=request.user.id)
-		product = Product.objects.filter(owner = shopowner, is_active=True)
+		shopowner = MyUser.object.get(pk=request.user.id)
+		product = get_object_or_404(Product, pk=pk)
 		return render(request, 'shopowner/viewproductdetails.html', {'product':product, 'shopowner':shopowner})
 
 def supdate_product(request, pk):
 	if request.user.is_ShopOwner:
 		cid = request.POST.get('cname')
-		product = get_object_404(Product, pk=pk)
+		product = get_object_or_404(Product, pk=pk)
 		form = AddProductForm(request.POST or None, instance=product )
 		if request.method == 'POST':
 			form = AddProductForm(request.POST)
@@ -205,7 +205,7 @@ def supdate_product(request, pk):
 
 def delete_product(request, pk):
 	if request.user.is_ShopOwner:
-		product = get_object_404(Product, pk=pk)
+		product = get_object_or_404(Product, pk=pk)
 		if request.method == 'POST':
 			product.delete()
 			return redirect('/')
