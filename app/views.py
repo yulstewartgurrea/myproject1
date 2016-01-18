@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from .forms import *
 from .models import *
 from django.utils import timezone
+from django.contrib.auth.forms import SetPasswordForm
 # Create your views here.
 
 def register_user(request):
@@ -229,6 +230,17 @@ def sview_productbycategory(request, category_id):
 		shopowner = MyUser.object.get(pk=request.user.id)
 		product = Product.objects.filter(cid=category_id, owner=shopowner)
 		return render(request, 'shopowner/viewproductbycategory.html', {'product': product, 'shopowner': shopowner})
+
+def ssettings(request):
+	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
+		form1 = PasswordChangeForm(SetPasswordForm)
+		if request.method == 'POST':
+			form1 = PasswordChangeForm(request.POST)
+			if form1.is_valid():
+				form1.save()
+				return redirect('ssetings')
+	return render(request, 'shopowner/settings.html', {'shopowner': shopowner, 'form1':form1}) 
 
 
 ############################################################################

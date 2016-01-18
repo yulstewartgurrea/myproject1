@@ -1,7 +1,7 @@
 from django import forms
 from .models import *
 from django.forms import ModelForm
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 
 ########################################################################################################
 ########################################################################################################
@@ -79,3 +79,14 @@ class SAddProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['pname', 'description', 'cid', 'sex']
+
+########################################################################################################
+########################################################################################################
+###################################   CHANGE PASSWORD FORMS  ###########################################
+
+class PasswordChangeForm(SetPasswordForm):
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30)), label=("Old Password"))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30)), label=("New Password"))
+
+
+
