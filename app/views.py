@@ -5,6 +5,7 @@ from .forms import *
 from .models import *
 from django.utils import timezone
 from django.contrib.auth.forms import SetPasswordForm
+from django.core.urlresolvers import reverse
 # Create your views here.
 
 def register_user(request):
@@ -234,13 +235,59 @@ def sview_productbycategory(request, category_id):
 def ssettings(request):
 	if request.user.is_ShopOwner:
 		shopowner = MyUser.object.get(pk=request.user.id)
-		form1 = PasswordChangeForm(SetPasswordForm)
+		userprof = UserProf.objects.get(acct=shopowner, is_active=True)
+		add1 = BillingAddress.objects.filter(acct=userprof, is_active=True)
+		add2 = PermanentAddress.objects.filter(acct=userprof, is_active=True)
+	return render(request, 'shopowner/settings.html', {'shopowner': shopowner, 'userprof':userprof, 'add1':add1, 'add2':add2}) 
+
+def ssupdate_profile(request):
+	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
+		# up = get_object_or_404(UserProf, pk=shopowner)
+		form = ProfileForm(request.POST, instance=request.user.profile)
 		if request.method == 'POST':
-			form1 = PasswordChangeForm(request.POST)
-			if form1.is_valid():
-				form1.save()
-				return redirect('ssetings')
-	return render(request, 'shopowner/settings.html', {'shopowner': shopowner, 'form1':form1}) 
+			form = ProfileForm(request.POST, instance=request.user.profile)
+			if form.is_valid():
+				shopowner = MyUser.object.get(pk=request.user.id)
+				frm = form.save(commit=False)
+				frm.acct = shopowner
+				frm.save()
+			return redirect('ssettings')
+		return render(request, 'shopowner/up.html', {'shopowner': shopowner, 'form':form})
+
+def ssupdate_billingaddress(request,pk):
+	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
+		ba = get_object_or_404(BillingAddress, pk=pk)
+		form = BillingAddressForm(request.POST, instance=ba)
+		if request.method == 'POST':
+			form = BillingAddressForm(request.POST, instance=ba)
+			if form.is_valid():
+				frm = form.save(commit=False)
+				shopowner = MyUser.object.get(pk=request.user.id)
+				frm.acct = shopowner 
+				frm.save()
+			return redirect('ssettings')
+	return render(request, 'shopowner/ba.html', {'shopowner': shopowner, 'form':form, 'ba':ba})
+
+def ssupdate_permanentaddress(request,pk):
+	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
+		pa = get_object_or_404(PermanentAddress, pk=pk)
+		form = PermanentAddressForm(request.POST, instance=pa)
+		if request.method == 'POST':
+			form = PermanentAddressForm(request.POST, instance=pa)
+			if form.is_valid():
+				frm = form.save(commit=False)
+				shopowner = MyUser.object.get(pk=request.user.id)
+				frm.acct = shopowner
+				frm.save()
+				return redirect('ssettings')
+	return render(request, 'shopowner/pa.html', {'shopowner': shopowner, 'form':form, 'pa':pa})
+
+
+
+
 
 
 ############################################################################

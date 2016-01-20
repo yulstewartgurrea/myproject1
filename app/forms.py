@@ -66,6 +66,23 @@ class AddProductForm(forms.ModelForm):
         model = Product
         fields = ['pname', 'description', 'cid', 'owner', 'sex']
 
+class ProfileForm(forms.ModelForm):
+    fname = forms.CharField(label="First Name")
+    lname = forms.CharField(label="Last Name")
+    class Meta:
+        model = UserProf
+        fields = ['fname', 'lname']
+
+class BillingAddressForm(forms.ModelForm):
+    class Meta:
+        model = BillingAddress
+        fields = ['street', 'city', 'state', 'postalcode', 'country', 'pnum']
+
+class PermanentAddressForm(forms.ModelForm):
+    class Meta:
+        model = PermanentAddress
+        fields = ['street', 'city', 'state', 'postalcode', 'country', 'pnum']
+
 ########################################################################################################
 ########################################################################################################
 ###################################   SHOPOWNER FORMS     ##############################################
@@ -79,6 +96,11 @@ class SAddProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['pname', 'description', 'cid', 'sex']
+
+class SImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['img1', 'img2', 'img3','img4', 'img5',]
 
 ########################################################################################################
 ########################################################################################################

@@ -73,8 +73,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 ############################################################################
 
 class UserProf(models.Model):
-    fname = models.CharField(max_length=120)
-    lname = models.CharField(max_length=120)
+    fname = models.CharField(max_length=120, default="First Name")
+    lname = models.CharField(max_length=120, default="Last Name")
     # dp = models.ImageField()
     acct = models.ForeignKey(MyUser)
     is_active=models.BooleanField(default=True)
@@ -82,24 +82,33 @@ class UserProf(models.Model):
     def __unicode__(self):
         return self.fname + " " + self.lname
 
-class BillingAdress(models.Model):
+MyUser.profile = property(lambda u: UserProf.objects.get_or_create(acct=u)[0])
+
+class BillingAddress(models.Model):
     postalcode = models.CharField(max_length=120)
     country = models.CharField(max_length=120)
     city = models.CharField(max_length=120)
     state = models.CharField(max_length=120)
     pnum = models.CharField(max_length=120)
-    acct = models.ForeignKey(MyUser)
+    acct = models.ForeignKey(UserProf)
     is_active=models.BooleanField(default=True)
+    street = models.CharField(max_length=120, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.acct
 
 class PermanentAddress(models.Model):
     postalcode = models.CharField(max_length=120)
     country = models.CharField(max_length=120)
     city = models.CharField(max_length=120)
     state = models.CharField(max_length=120)
-    state = models.CharField(max_length=120)
+    street = models.CharField(max_length=120, null=True, blank=True)
     pnum = models.CharField(max_length=120)
-    acct = models.ForeignKey(MyUser)
+    acct = models.ForeignKey(UserProf)
     is_active=models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.acct
 
 class Gender(models.Model):
     gender = models.CharField(max_length=120, null=True, blank=True)
@@ -142,6 +151,7 @@ class Product(models.Model):
     description = models.TextField(max_length=500)
     dateadded = models.DateTimeField(default=timezone.now())
     sex = models.ForeignKey(Gender, null=True, blank=True)
+    shop = models.ForeignKey(Shop, null=True, blank=True)
 
     def __unicode__(self):
         return self.pname
@@ -160,13 +170,13 @@ class PriceRange(models.Model):
     def __unicode__(self):
         return self.price
 
-# class Image(models.Model):
-#     img1 = models.ImageField(upload_to=generate_filename)
-#     img2 = models.ImageField(upload_to=generate_filename)
-#     img3 = models.ImageField(upload_to=generate_filename)
-#     img4 = models.ImageField(upload_to=generate_filename)
-#     img5 = models.ImageField(upload_to=generate_filename)
-#     pid = models.ForeignKey(Product)
+class Image(models.Model):
+    img1 = models.FileField(upload_to=None)
+    img2 = models.FileField(upload_to=None)
+    img3 = models.FileField(upload_to=None)
+    img4 = models.FileField(upload_to=None)
+    img5 = models.FileField(upload_to=None)
+    pid = models.ForeignKey(Product)
 
 
 

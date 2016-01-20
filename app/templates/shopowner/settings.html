@@ -3,4 +3,29 @@
 <h1>Settings</h1>
 <legend></legend>
 <a href="/password_change/">Change Password</a>
+
+<h3>Profile</h3>
+<legend></legend>
+<p>First Name: {{userprof.fname}}</p>
+<p>Last Name: {{userprof.lname}}</p>
+<button type="button" value="update"><a href="/shopowner/settings/update/profile/">Update</a></button>
+<h3>Billing Address</h3>
+<legend></legend>
+<p>Street: {{add2.street}}</p>
+<p>City: {{add2.city}}</p>
+<p>State: {{add2.state}}</p>
+<p>Postalcode: {{add2.postalcode}}</p>
+<p>Country: {{add2.country}}</p>
+<p>Phone number: {{add2.pnum}}</p>
+<button type="button" value="update"><a href="/shopowner/settings/update/billingaddress/{{ba.pk}}">Update</a></button>
+<h3>Permanent Address</h3>
+<legend></legend>
+<p>Street: {{add3.street}}</p>
+<p>City: {{add3.city}}</p>
+<p>State: {{add3.state}}</p>
+<p>Postalcode: {{add3.postalcode}}</p>
+<p>Country: {{add3.country}}</p>
+<p>Phone number: {{add3.pnum}}</p>
+<button type="button" value="update"><a href="/shopowner/settings/update/permanentaddress/{{pa.pk}}">Update</a></button>
+
 {%endblock%}

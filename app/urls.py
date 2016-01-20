@@ -51,7 +51,10 @@ urlpatterns += patterns('',
 	url(r'^shopowner/category/(?P<category_id>\d+)/$', 'app.views.sview_productbycategory', name='sview_productbycategory'),
 	url(r'^shopowner/product/update/(?P<pk>\d+)/$', 'app.views.supdate_product', name='supdate_product'),
 	url(r'^shopowner/product/delete/(?P<pk>\d+)/$', 'app.views.sdelete_product', name='sdelete_product'),
-	url(r'^shopowner/product/settings/$', 'app.views.ssettings', name='ssettings'),
+	url(r'^shopowner/settings/$', 'app.views.ssettings', name='ssettings'),
+	url(r'^shopowner/settings/update/profile/$', 'app.views.ssupdate_profile', name='ssupdate_profile'),
+	url(r'^shopowner/settings/update/billingaddress/(?P<pk>\d+)/$', 'app.views.ssupdate_billingaddress', name='ssupdate_billingaddress'),
+	url(r'^shopowner/settings/update/permanentaddress/(?P<pk>\d+)/$', 'app.views.ssupdate_permanentaddress', name='ssupdate_permanentaddress'),
 
 )
 

@@ -102,3 +102,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'app.MyUser'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+AUTH_PROFILE_MODULE = "app.UserProf"
