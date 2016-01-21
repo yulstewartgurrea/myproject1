@@ -6,7 +6,6 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from decimal import Decimal
 
-
 ############################################################################
 ############################################################################
 ############################################################################
@@ -86,29 +85,33 @@ MyUser.profile = property(lambda u: UserProf.objects.get_or_create(acct=u)[0])
 
 class BillingAddress(models.Model):
     postalcode = models.CharField(max_length=120)
-    country = models.CharField(max_length=120)
+    brgy = models.CharField(max_length=120)
     city = models.CharField(max_length=120)
     state = models.CharField(max_length=120)
     pnum = models.CharField(max_length=120)
-    acct = models.ForeignKey(UserProf)
+    acct = models.ForeignKey(MyUser)
     is_active=models.BooleanField(default=True)
     street = models.CharField(max_length=120, null=True, blank=True)
 
     def __unicode__(self):
-        return self.acct
+        return self.brgy
+
+MyUser.profile1 = property(lambda u: BillingAddress.objects.get_or_create(acct=u)[0])
 
 class PermanentAddress(models.Model):
     postalcode = models.CharField(max_length=120)
-    country = models.CharField(max_length=120)
+    brgy = models.CharField(max_length=120)
     city = models.CharField(max_length=120)
     state = models.CharField(max_length=120)
     street = models.CharField(max_length=120, null=True, blank=True)
     pnum = models.CharField(max_length=120)
-    acct = models.ForeignKey(UserProf)
+    acct = models.ForeignKey(MyUser)
     is_active=models.BooleanField(default=True)
 
     def __unicode__(self):
-        return self.acct
+        return self.brgy
+
+MyUser.profile2 = property(lambda u: PermanentAddress.objects.get_or_create(acct=u)[0])
 
 class Gender(models.Model):
     gender = models.CharField(max_length=120, null=True, blank=True)

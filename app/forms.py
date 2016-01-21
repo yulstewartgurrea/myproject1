@@ -73,15 +73,23 @@ class ProfileForm(forms.ModelForm):
         model = UserProf
         fields = ['fname', 'lname']
 
+    # def __init__(self, *args, **kwargs):
+    #     super(ProfileForm, self).__init__(*args, **kwargs)
+    #     userprof = UserProf.objects.get(acct=MyUser, is_active=True)
+    #     up = []
+    #     for users in userprof:
+    #         up.append((users.id, users.fname))
+    #     self.fields['fname'] = forms.CharField(fname=up)
+
 class BillingAddressForm(forms.ModelForm):
     class Meta:
         model = BillingAddress
-        fields = ['street', 'city', 'state', 'postalcode', 'country', 'pnum']
+        fields = ['street', 'brgy', 'city', 'state', 'postalcode', 'pnum']
 
 class PermanentAddressForm(forms.ModelForm):
     class Meta:
         model = PermanentAddress
-        fields = ['street', 'city', 'state', 'postalcode', 'country', 'pnum']
+        fields = ['street', 'brgy', 'city', 'state', 'postalcode', 'pnum']
 
 ########################################################################################################
 ########################################################################################################

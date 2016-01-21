@@ -53,8 +53,8 @@ urlpatterns += patterns('',
 	url(r'^shopowner/product/delete/(?P<pk>\d+)/$', 'app.views.sdelete_product', name='sdelete_product'),
 	url(r'^shopowner/settings/$', 'app.views.ssettings', name='ssettings'),
 	url(r'^shopowner/settings/update/profile/$', 'app.views.ssupdate_profile', name='ssupdate_profile'),
-	url(r'^shopowner/settings/update/billingaddress/(?P<pk>\d+)/$', 'app.views.ssupdate_billingaddress', name='ssupdate_billingaddress'),
-	url(r'^shopowner/settings/update/permanentaddress/(?P<pk>\d+)/$', 'app.views.ssupdate_permanentaddress', name='ssupdate_permanentaddress'),
+	url(r'^shopowner/settings/update/billingaddress/$', 'app.views.ssupdate_billingaddress', name='ssupdate_billingaddress'),
+	url(r'^shopowner/settings/update/permanentaddress/$', 'app.views.ssupdate_permanentaddress', name='ssupdate_permanentaddress'),
 
 )
 
