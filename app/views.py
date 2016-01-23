@@ -19,12 +19,12 @@ def register_user(request):
             form.save()
             return redirect('register_done')
         else:        
-            form = RegistrationForm()
+            form = RegistrationForm(request.POST)
 
 	return render(request, 'registration/register.html', {'form': form})
 
 def register_done(request):
-	return render(request, 'registration/register_done.html')
+	return render(request, 'registration/registerdone.html')
 
 
 def login_user(request):
@@ -39,6 +39,9 @@ def login_user(request):
 			if user is not None and user.is_active:
 				login(request, user)
 				return redirect('home')
+
+			else:
+				return redirect('login_error')
 
 		except MyUser.DoesNotExist:
 			return redirect('login')
@@ -67,6 +70,9 @@ def home(request):
 			return redirect('shopowner_dashboard')
 		if user.is_Customer:
 			return redirect('shop')
+
+def login_error(request):
+	return render(request, 'registration/login_error.html')
 
 ############################################################################
 ############################################################################
@@ -235,9 +241,9 @@ def sview_productbycategory(request, category_id):
 def ssettings(request):
 	if request.user.is_ShopOwner:
 		shopowner = MyUser.object.get(pk=request.user.id)
-		userprof = UserProf.objects.get(acct=shopowner, is_active=True)
-		add1 = BillingAddress.objects.get(acct=shopowner, is_active=True)
-		add2 = PermanentAddress.objects.get(acct=shopowner, is_active=True)
+		userprof = UserProf.objects.filter(acct=shopowner, is_active=True)
+		add1 = BillingAddress.objects.filter(acct=shopowner, is_active=True)
+		add2 = PermanentAddress.objects.filter(acct=shopowner, is_active=True)
 	return render(request, 'shopowner/settings.html', {'shopowner': shopowner, 'userprof':userprof, 'add1':add1, 'add2':add2}) 
 
 def ssupdate_profile(request):

@@ -1,8 +1,28 @@
-<h1> login </h1>
-<form role="form" action="/login/" method="post">{%csrf_token%}
-	<input type="text" name="email">
-	<input type="password" name="password">
-	<button type="submit" value="login">Sign in</button>
-</form>
-
-<a href="/password_reset/">Forgot Password? </a>
+{%extends 'registration/base.html'%}
+{%block content%}
+<div class="registration_left">
+	<h2>Login</h2>
+	<div class="registration_form">
+	<!-- Form -->
+		<form id="registration_form" method="post">{%csrf_token%}
+			<div>
+				<label></label>
+					<input placeholder="email:" type="email" name="email" tabindex="3" required>
+				</label>
+			</div>
+			<div>
+				<label>
+					<input placeholder="password" type="password" name="password" tabindex="4" required>
+				</label>
+			</div>						
+			<div>
+				<input type="submit" value="signin" id="register-submit">
+			</div>
+			<div class="forget">
+				<a href="#">forgot your password</a>
+			</div>
+		</form>
+		<!-- /Form -->
+	</div>
+</div>
+{%endblock%}

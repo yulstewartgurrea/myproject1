@@ -6,26 +6,32 @@
 
 <h3>Profile</h3>
 <legend></legend>
+{%for userprof in userprof %}
 <p>First Name: {{userprof.fname}}</p>
 <p>Last Name: {{userprof.lname}}</p>
+{%endfor%}
 <button type="button" value="update"><a href="/shopowner/settings/update/profile/">Update</a></button>
 <h3>Billing Address</h3>
 <legend></legend>
+{%for add1 in add1%}
 <p>Street: {{add1.street}}</p>
 <p>Barangay: {{add1.brgy}}</p>
 <p>City: {{add1.city}}</p>
 <p>State: {{add1.state}}</p>
 <p>Postalcode: {{add1.postalcode}}</p>
 <p>Phone number: {{add1.pnum}}</p>
+{%endfor%}
 <button type="button" value="update"><a href="/shopowner/settings/update/billingaddress/">Update</a></button>
 <h3>Permanent Address</h3>
 <legend></legend>
+{%for add2 in add2%}
 <p>Street: {{add2.street}}</p>
 <p>Barangay: {{add2.brgy}}</p>
 <p>City: {{add2.city}}</p>
 <p>State: {{add2.state}}</p>
 <p>Postalcode: {{add2.postalcode}}</p>
 <p>Phone number: {{add2.pnum}}</p>
+{%endfor%}
 <button type="button" value="update"><a href="/shopowner/settings/update/permanentaddress/">Update</a></button>
 
 {%endblock%}

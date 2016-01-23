@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 ########################################################################################################
 ###################################     ADMIN FORMS       ##############################################
 
+
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     class Meta:
@@ -64,7 +65,7 @@ class AddProductForm(forms.ModelForm):
     sex = forms.ModelChoiceField(label="Gender", queryset=Gender.objects.all())
     class Meta:
         model = Product
-        fields = ['pname', 'description', 'cid', 'owner', 'sex']
+        fields = ['pname', 'description', 'cid', 'owner', 'sex', 'is_active']
 
 class ProfileForm(forms.ModelForm):
     fname = forms.CharField(label="First Name")

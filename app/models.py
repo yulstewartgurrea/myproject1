@@ -72,8 +72,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 ############################################################################
 
 class UserProf(models.Model):
-    fname = models.CharField(max_length=120, default="First Name")
-    lname = models.CharField(max_length=120, default="Last Name")
+    fname = models.CharField(max_length=120, default="None")
+    lname = models.CharField(max_length=120, default="None")
     # dp = models.ImageField()
     acct = models.ForeignKey(MyUser)
     is_active=models.BooleanField(default=True)
@@ -84,14 +84,14 @@ class UserProf(models.Model):
 MyUser.profile = property(lambda u: UserProf.objects.get_or_create(acct=u)[0])
 
 class BillingAddress(models.Model):
-    postalcode = models.CharField(max_length=120)
-    brgy = models.CharField(max_length=120)
-    city = models.CharField(max_length=120)
-    state = models.CharField(max_length=120)
-    pnum = models.CharField(max_length=120)
+    postalcode = models.CharField(max_length=120, default="None")
+    brgy = models.CharField(max_length=120, default="None")
+    city = models.CharField(max_length=120, default="None")
+    state = models.CharField(max_length=120, default="None")
+    pnum = models.CharField(max_length=120, default="None")
     acct = models.ForeignKey(MyUser)
     is_active=models.BooleanField(default=True)
-    street = models.CharField(max_length=120, null=True, blank=True)
+    street = models.CharField(max_length=120, default="None")
 
     def __unicode__(self):
         return self.brgy
@@ -99,12 +99,12 @@ class BillingAddress(models.Model):
 MyUser.profile1 = property(lambda u: BillingAddress.objects.get_or_create(acct=u)[0])
 
 class PermanentAddress(models.Model):
-    postalcode = models.CharField(max_length=120)
-    brgy = models.CharField(max_length=120)
-    city = models.CharField(max_length=120)
-    state = models.CharField(max_length=120)
-    street = models.CharField(max_length=120, null=True, blank=True)
-    pnum = models.CharField(max_length=120)
+    postalcode = models.CharField(max_length=120, default="None")
+    brgy = models.CharField(max_length=120, default="None")
+    city = models.CharField(max_length=120, default="None")
+    state = models.CharField(max_length=120, default="None")
+    street = models.CharField(max_length=120, default="None")
+    pnum = models.CharField(max_length=120, default="None")
     acct = models.ForeignKey(MyUser)
     is_active=models.BooleanField(default=True)
 
