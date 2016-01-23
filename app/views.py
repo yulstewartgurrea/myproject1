@@ -162,31 +162,37 @@ def sview_category(request):
 
 def sadd_product(request):
 	form = SAddProductForm()
+	form2 = SImageForm()
 	cid = request.POST.get('cname')
 	shopowner = MyUser.object.get(pk=request.user.id)
 	sex = request.POST.get('gender')
 	if request.method == 'POST' and request.user.is_ShopOwner:
 		form = SAddProductForm(request.POST)
-		if form.is_valid():
-			frm = form.save(commit=False)
+		form2 = SImageForm(request.POST, request.FILES)
+		if form.is_valid() and form2.is_valid():
 			shopowner = MyUser.object.get(pk=request.user.id)
-			# gid = Gender.objects.get(pk=sex_id)
-			# category = Category.objects.get(pk=cid_id)
+			# pid = Product.objects.get(owner=shopowner, is_active=True)
+			frm = form.save(commit=False)
+			image = form2.save(commit=False)
 			frm.owner = shopowner
-			# frm.cid.add(category)
+			frm.is_active=True
 			frm.save()
-			# p = Product(pname=request.POST.get('pname'), description=request.POST.get('description'), is_active=True,
-			# 	owner=shopowner, dateadded=request.POST.get('dateadded'), cid=category)
-			# p.save()
+			image.save()
+			# image.pid = pid
+			# image.save()
+
+			# image.save()
 			return redirect('sadd_product')
 		else:
 			form = SAddProductForm(request.POST)
+			form2 = SImageForm(request.POST)
 
-	return render(request, 'shopowner/addproduct.html',{'form':form, 'shopowner': shopowner})
+	return render(request, 'shopowner/addproduct.html',{'form':form, 'shopowner': shopowner, 'form2': form2})
 
 def sview_product(request):
 	if request.user.is_ShopOwner:
 		shopowner = MyUser.object.get(pk=request.user.id)
+		# prid = Product.objects.get()
 		product = Product.objects.filter(owner=shopowner, is_active=True)
 		return render(request, 'shopowner/viewproduct.html', {'product': product, 'shopowner': shopowner})
 
@@ -194,7 +200,8 @@ def sview_productdetails(request, pk):
 	if request.user.is_ShopOwner:
 		shopowner = MyUser.object.get(pk=request.user.id)
 		product = get_object_or_404(Product, pk=pk)
-		return render(request, 'shopowner/viewproductdetails.html', {'product':product, 'shopowner':shopowner})
+		image = get_object_or_404(Image, pid=pk)
+		return render(request, 'shopowner/viewproductdetails.html', {'product':product, 'shopowner':shopowner, 'image': image})
 
 def supdate_product(request, pk):
 	if request.user.is_ShopOwner:

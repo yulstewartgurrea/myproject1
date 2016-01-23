@@ -174,11 +174,11 @@ class PriceRange(models.Model):
         return self.price
 
 class Image(models.Model):
-    img1 = models.FileField(upload_to=None)
-    img2 = models.FileField(upload_to=None)
-    img3 = models.FileField(upload_to=None)
-    img4 = models.FileField(upload_to=None)
-    img5 = models.FileField(upload_to=None)
+    img1 = models.FileField(upload_to='pimages')
+    img2 = models.FileField(upload_to='pimages')
+    img3 = models.FileField(upload_to='pimages')
+    img4 = models.FileField(upload_to='pimages')
+    img5 = models.FileField(upload_to='pimages')
     pid = models.ForeignKey(Product)
 
 
