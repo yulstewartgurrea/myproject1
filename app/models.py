@@ -6,6 +6,7 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from decimal import Decimal
 
+
 ############################################################################
 ############################################################################
 ############################################################################
@@ -174,12 +175,12 @@ class PriceRange(models.Model):
         return self.price
 
 class Image(models.Model):
-    img1 = models.FileField(upload_to='pimages')
-    img2 = models.FileField(upload_to='pimages')
-    img3 = models.FileField(upload_to='pimages')
-    img4 = models.FileField(upload_to='pimages')
-    img5 = models.FileField(upload_to='pimages')
-    pid = models.ForeignKey(Product)
+    img1 = models.FileField(upload_to='pimages', default="pimages/noimage.jpg")
+    img2 = models.FileField(upload_to='pimages', default="pimages/noimage.jpg")
+    img3 = models.FileField(upload_to='pimages', default="pimages/noimage.jpg")
+    img4 = models.FileField(upload_to='pimages', default="pimages/noimage.jpg")
+    img5 = models.FileField(upload_to='pimages', default="pimages/noimage.jpg")
+    pid = models.ForeignKey(Product, null=True, blank=True)
 
 
 

@@ -163,9 +163,7 @@ def sview_category(request):
 def sadd_product(request):
 	form = SAddProductForm()
 	form2 = SImageForm()
-	cid = request.POST.get('cname')
 	shopowner = MyUser.object.get(pk=request.user.id)
-	sex = request.POST.get('gender')
 	if request.method == 'POST' and request.user.is_ShopOwner:
 		form = SAddProductForm(request.POST)
 		form2 = SImageForm(request.POST, request.FILES)
@@ -173,15 +171,15 @@ def sadd_product(request):
 			shopowner = MyUser.object.get(pk=request.user.id)
 			# pid = Product.objects.get(owner=shopowner, is_active=True)
 			frm = form.save(commit=False)
-			image = form2.save(commit=False)
+			image = form2.save()
 			frm.owner = shopowner
 			frm.is_active=True
 			frm.save()
-			image.save()
 			# image.pid = pid
-			# image.save()
-
-			# image.save()
+			image.save()
+			pid = Product.objects.get(id=frm.pk)
+			image.pid = pid
+			image.save()
 			return redirect('sadd_product')
 		else:
 			form = SAddProductForm(request.POST)
@@ -206,28 +204,26 @@ def sview_productdetails(request, pk):
 def supdate_product(request, pk):
 	if request.user.is_ShopOwner:
 		shopowner = MyUser.object.get(pk=request.user.id)
-		cid = request.POST.get('cname')
 		product = get_object_or_404(Product, pk=pk)
+		image = get_object_or_404(Image, pid=pk)
 		form = SAddProductForm(request.POST or None, instance=product)
+		form2 = SImageForm(request.POST or None, request.FILES, instance=image)
 		if request.method == 'POST':
 			form = SAddProductForm(request.POST, instance=product)
-			if form.is_valid:
-				# product.pname = request.POST.get('pname')
-				# product.description = request.POST.get('description')
-				# product.is_active = request.POST.get('is_active')
-				# product.dateadded = request.POST.get('dateadded')
-				# product.sex = request.POST.get('sex')
-				# product.cid = request.POST.get('cid')
-				# shopowner = MyUser.object.get(pk=request.user.id)
-				# product.owner=shopowner
-				# product.save()
+			form2 = SImageForm(request.POST, request.FILES, instance=image)
+			if form.is_valid() and form2.is_valid():
 				shopowner = MyUser.object.get(pk=request.user.id)
 				frm = form.save(commit=False)
+				image = form2.save(commit=False)
 				frm.owner = shopowner
 				frm.save()
+				image.save()
+				pid = Product.objects.get(id=frm.pk)
+				image.pid = pid
+				image.save()
 				return redirect('sview_product')
 
-	return render(request, 'shopowner/updateproduct.html', {'form': form, 'product': product, 'shopowner': shopowner})
+	return render(request, 'shopowner/updateproduct.html', {'form': form, 'product': product, 'shopowner': shopowner, 'form2': form2})
 
 def sdelete_product(request, pk):
 	if request.user.is_ShopOwner:

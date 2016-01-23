@@ -2,7 +2,7 @@
 {%block content%}
 <h1>Add Product</h1>
 <legend></legend>
-<form method='post'>{%csrf_token%}
+<form method='post' enctype="multipart/form-data">{%csrf_token%}
 	{{form.as_p}}
 	{{form2.as_p}}
 	<button type="submit" value="Submit"> Add </button>
