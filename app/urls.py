@@ -61,6 +61,7 @@ urlpatterns += patterns('',
 	url(r'^shopowner/settings/update/profile/$', 'app.views.ssupdate_profile', name='ssupdate_profile'),
 	url(r'^shopowner/settings/update/billingaddress/$', 'app.views.ssupdate_billingaddress', name='ssupdate_billingaddress'),
 	url(r'^shopowner/settings/update/permanentaddress/$', 'app.views.ssupdate_permanentaddress', name='ssupdate_permanentaddress'),
+	url(r'^shopowner/settings/update/shopname/$', 'app.views.shopname', name='shopname'),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)#for photo upload
 

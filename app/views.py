@@ -247,7 +247,8 @@ def ssettings(request):
 		userprof = UserProf.objects.filter(acct=shopowner, is_active=True)
 		add1 = BillingAddress.objects.filter(acct=shopowner, is_active=True)
 		add2 = PermanentAddress.objects.filter(acct=shopowner, is_active=True)
-	return render(request, 'shopowner/settings.html', {'shopowner': shopowner, 'userprof':userprof, 'add1':add1, 'add2':add2}) 
+		shopname = Shop.objects.filter(sid=shopowner, is_active=True)
+	return render(request, 'shopowner/settings.html', {'shopowner': shopowner, 'userprof':userprof, 'add1':add1, 'add2':add2, 'shopname': shopname}) 
 
 def ssupdate_profile(request):
 	if request.user.is_ShopOwner:
@@ -291,10 +292,19 @@ def ssupdate_permanentaddress(request):
 				return redirect('ssettings')
 	return render(request, 'shopowner/pa.html', {'shopowner': shopowner, 'form':form})
 
-
-
-
-
+def shopname(request):
+	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
+		form = ShopForm(instance=request.user.profile3)
+		if request.method == 'POST':
+			form = ShopForm(request.POST, instance=request.user.profile3)
+			if form.is_valid():
+				frm = form.save(commit=False)
+				shopowner = MyUser.object.get(pk=request.user.id)
+				frm.acct = shopowner
+				frm.save()
+				return redirect('ssettings')
+	return render(request, 'shopowner/pa.html', {'shopowner': shopowner, 'form':form})
 
 ############################################################################
 ############################################################################

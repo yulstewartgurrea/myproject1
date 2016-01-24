@@ -129,12 +129,14 @@ class Classification(models.Model):
         return self.classification
 
 class Shop(models.Model):
-    sname = models.CharField(max_length=120, null=True, blank=True)
+    sname = models.CharField(max_length=120, default="None")
     sid = models.ForeignKey(MyUser)
     is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.sname
+
+MyUser.profile3 = property(lambda u: Shop.objects.get_or_create(sid=u)[0])
 
 class Category(models.Model):
     cname = models.CharField(max_length=120)
