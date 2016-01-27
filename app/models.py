@@ -158,6 +158,7 @@ class Product(models.Model):
     dateadded = models.DateTimeField(default=timezone.now())
     sex = models.ForeignKey(Gender, null=True, blank=True)
     shop = models.ForeignKey(Shop, null=True, blank=True)
+    price = models.DecimalField(max_digits=20, decimal_places=2, default=0.00)
 
     def __unicode__(self):
         return self.pname

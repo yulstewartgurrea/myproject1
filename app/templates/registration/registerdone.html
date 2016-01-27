@@ -7,7 +7,7 @@
 	</div>
 	<div class="registration_form">
 	<!-- Form -->
-		<form id="registration_form" method="post">{%csrf_token%}
+		<form id="registration_form" action="/login/" method="post">{%csrf_token%}
 			<div>
 				<label></label>
 					<input placeholder="email:" type="email" name="email" tabindex="3" required>

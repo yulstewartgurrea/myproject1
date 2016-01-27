@@ -313,8 +313,26 @@ def shopname(request):
 def shop(request):
 	if request.user.is_authenticated() and request.user.is_Customer:
 		customer = MyUser.object.get(pk=request.user.id)
-		return render(request, 'shop.html')
+		return render(request, 'homepage.html')
 	else:
 		return redirect('home')
+
+def allproducts(request):
+	if request.user.is_Customer:
+		c = Product.objects.filter(is_active=True).count()
+		customer = MyUser.object.get(pk=request.user.id)
+		product = Product.objects.filter(is_active=True)
+		image = Image.objects.filter(id=product)
+		category = Category.objects.all()
+
+	return render(request, 'allproducts.html', {'customer': customer, 'product': product, 'image': image, 'c': c,
+		'category': category})
+
+def productdetails(request, pk):
+	if request.user.is_Customer:
+		customer = MyUser.object.get(pk=request.user.id)
+
+	return render(request, 'productdetails')
+
 
 
