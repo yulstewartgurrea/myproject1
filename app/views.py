@@ -6,6 +6,7 @@ from .models import *
 from django.utils import timezone
 from django.contrib.auth.forms import SetPasswordForm
 from django.core.urlresolvers import reverse
+from django.db.models import Sum
 # Create your views here.
 
 def register_user(request):
@@ -331,8 +332,32 @@ def allproducts(request):
 def productdetails(request, pk):
 	if request.user.is_Customer:
 		customer = MyUser.object.get(pk=request.user.id)
+		# shopowner = MyUser.object.get(pk=request.user.id, is_ShopOwner=True)
+		product = Product.objects.filter(pk=pk)
+		pid = Product.objects.get(pk=pk)
+		image = Image.objects.get(pid=product)
+		category = Category.objects.all()
 
-	return render(request, 'productdetails')
+		if request.method == 'POST':
+			print "data added to cart"
+			customer.cart_set.create(cuid=customer, pid=pid, purdate=timezone.now())
 
 
+			return redirect('cart')	
+
+	return render(request, 'productdetails.html', {'customer': customer, 'product': product, 'image': image, 'category': category})
+
+def cart(request):
+	if request.user.is_Customer:
+		customer = MyUser.object.get(pk=request.user.id)
+		cart = Cart.objects.filter(cuid=customer).values('pid', 'purdate')
+		product = Product.objects.filter(is_active=True)
+		tp = Product.objects.aggregate(Sum('price'))
+
+	return render(request, 'cart.html', {'customer': customer, 'cart': cart, 'product': product, 'tp': tp})
+
+def checkout(request):
+	if request.user.is_Customer:
+		customer = MyUser.object.get(pk=request.user.id)
+	return render(request, 'checkout.html')
 

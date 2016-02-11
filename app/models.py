@@ -187,6 +187,7 @@ class Image(models.Model):
 
 
 
-# class Cart(models.Model)
-#     cuid = models.ForeignKey(Customer)
-#     prid = models.ForeignKey(Product)
+class Cart(models.Model):
+    cuid = models.ForeignKey(MyUser)
+    pid = models.ForeignKey(Product)
+    purdate = models.DateTimeField(default=timezone.now())

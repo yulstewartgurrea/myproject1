@@ -3,54 +3,42 @@
 
 	<!-- start content -->
 	
-	<div class="col-md-9 w_content">
-		<div class="women">
-			<a href="#"><h4>Ethnicwear - <span>{{c}}</span> </h4></a>
-			<ul class="w_nav">
-						<li>Sort : </li>
-		     			<li><a class="active" href="#">popular</a></li> |
-		     			<li><a href="#">new </a></li> |
-		     			<li><a href="#">discount</a></li> |
-		     			<li><a href="#">price: Low High </a></li> 
-		     			<div class="clear"></div>	
-		     </ul>
-		     <div class="clearfix"></div>	
-		</div>
+<div class="col-md-9 w_content">
+	<div class="women">
+		<a href="#"><h4>Ethnicwear - <span>{{c}}</span> </h4></a>
+		<ul class="w_nav">
+					<li>Sort : </li>
+	     			<li><a class="active" href="#">popular</a></li> |
+	     			<li><a href="#">new </a></li> |
+	     			<li><a href="#">discount</a></li> |
+	     			<li><a href="#">price: Low High </a></li> 
+	     			<div class="clear"></div>	
+	     </ul>
+	     <div class="clearfix"></div>	
+	</div>
 		<!-- grids_of_4 -->
-		{%for product in product%}
-		<div class="grids_of_4">
-			
+   	    {%for product in product%}
 		{%for image in image%}
-		  <div class="grid1_of_4">
+		<div class="grids_of_4">
+   	    <div class="grid1_of_4">
+
 
 				<div class="content_box">
-					<p><a href="#"><img src="/media/{{image.img1}}" class="img-responsive" height=50px width=190px></a>
+					<p><a href="/shop/clothing/details/{{product.id}}/"><img src="/media/{{image.img1}}" class="img-responsive" height=50px width=190px></a>
 				   	  </a>
-				    <h4><a href="#l"> {{product.pname}}</a></h4>
+				    <h4><a href="/shop/clothing/details/{{product.id}}/"> {{product.pname}} </a></h4>
 				    
 					 <div class="grid_1 simpleCart_shelfItem">
 				    
 					 <div class="item_add"><span class="item_price"><h6>PHP {{product.price}}</h6></span></div>
-					<div class="item_add"><span class="item_price"><a href="#">add to cart</a></span></div>
-					 </div></p>
+					</div></p>
 			   	</div>
-			   	
-
-			</div>
-			
-{%endfor%}
-{%endfor%}
-			<div class="clearfix"></div>
-			
+		</div>	
+		{%endfor%}
+		{%endfor%}
 		</div>
-
-		
-		
-		
-		<!-- end grids_of_4 -->
-		
-		
-	</div>
+		<!-- end grids_of_4 -->		
+</div>
 
 	<!-- end content -->
 {%endblock%}

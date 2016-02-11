@@ -42,9 +42,12 @@ urlpatterns += patterns('',
 
 ############################################################################
 ############################################################################
-########################     SHOP           ################################
+########################     Customer       ################################
 urlpatterns += patterns('',
 	url(r'^shop/clothing/$', 'app.views.allproducts', name='allproducts'),
+	url(r'^shop/clothing/details/(?P<pk>\d+)/$', 'app.views.productdetails', name='productdetails'),
+	url(r'^cart/$', 'app.views.cart', name='cart'),
+
 
 )
 
