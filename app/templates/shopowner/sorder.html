@@ -1,0 +1,16 @@
+{%extends 'shopowner/shopowner.html'%}
+{%block content%}
+<h1> Orders </h1>
+<legend></legend>
+
+{%for product in product%}
+{%for cart in cart%}
+{%if product.shop == cart.shop%}
+
+{{product.pname}}
+
+
+{%endif%}
+{%endfor%}
+{%endfor%}
+{%endblock%}

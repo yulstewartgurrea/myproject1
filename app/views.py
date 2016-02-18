@@ -6,7 +6,7 @@ from .models import *
 from django.utils import timezone
 from django.contrib.auth.forms import SetPasswordForm
 from django.core.urlresolvers import reverse
-from django.db.models import Sum
+from django.db.models import Sum, Avg
 # Create your views here.
 
 def register_user(request):
@@ -307,6 +307,15 @@ def shopname(request):
 				return redirect('ssettings')
 	return render(request, 'shopowner/pa.html', {'shopowner': shopowner, 'form':form})
 
+def sorder(request):
+	if request.user.is_ShopOwner:
+		shopowner = MyUser.object.get(pk=request.user.id)
+		sname = Shop.objects.get(sid=shopowner)
+		cart = Cart.objects.filter(shop=sname)
+		product = Product.objects.filter(is_active=True)
+
+
+	return render(request, 'shopowner/sorder.html', {'shopowner': shopowner, 'product': product, 'cart': cart})
 ############################################################################
 ############################################################################
 ############################################################################
@@ -332,29 +341,28 @@ def allproducts(request):
 def productdetails(request, pk):
 	if request.user.is_Customer:
 		customer = MyUser.object.get(pk=request.user.id)
-		# shopowner = MyUser.object.get(pk=request.user.id, is_ShopOwner=True)
 		product = Product.objects.filter(pk=pk)
 		pid = Product.objects.get(pk=pk)
 		image = Image.objects.get(pid=product)
 		category = Category.objects.all()
+		shopowner = MyUser.object.filter(product=product)
+		shop = Shop.objects.get(sid=shopowner)
 
 		if request.method == 'POST':
 			print "data added to cart"
-			customer.cart_set.create(cuid=customer, pid=pid, purdate=timezone.now())
+			customer.cart_set.create(cuid=customer, pid=pid, shop=shop, purdate=timezone.now())
 
 
-			return redirect('cart')	
+			return redirect('cart')		
 
 	return render(request, 'productdetails.html', {'customer': customer, 'product': product, 'image': image, 'category': category})
 
 def cart(request):
 	if request.user.is_Customer:
 		customer = MyUser.object.get(pk=request.user.id)
-		cart = Cart.objects.filter(cuid=customer).values('pid', 'purdate')
+		cart = Cart.objects.filter(cuid=customer).values('shop', 'pid', 'purdate')
 		product = Product.objects.filter(is_active=True)
-		tp = Product.objects.aggregate(Sum('price'))
-
-	return render(request, 'cart.html', {'customer': customer, 'cart': cart, 'product': product, 'tp': tp})
+	return render(request, 'cart.html', {'customer': customer, 'cart': cart, 'product': product})
 
 def checkout(request):
 	if request.user.is_Customer:

@@ -191,3 +191,4 @@ class Cart(models.Model):
     cuid = models.ForeignKey(MyUser)
     pid = models.ForeignKey(Product)
     purdate = models.DateTimeField(default=timezone.now())
+    shop = models.ForeignKey(Shop, null=True, blank=True)
