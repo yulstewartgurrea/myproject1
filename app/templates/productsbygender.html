@@ -132,9 +132,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<h4>categories</h4>
 						<div class="row1 scroll-pane">
 							<div class="col col-4">
+								
+								{%for gender in gender%}
 								{%for category in category%}
-								<p><a href="/shop/clothing/category/{{category.id}}/">{{category.cname}}</a></p>
+								<p><a href="/shop/clothing/gender/category/{{gender.id}}/{{category.id}}/">{{category.cname}}</a></p>
 								{%endfor%}
+								{%endfor%}
+								
+								
 <!-- 								<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>kurtas</label> -->
 							</div>
 <!-- 							<div class="col col-4">
@@ -208,15 +213,54 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
    </div>
 
-{%block content%} {%endblock%}
+	<!-- start content -->
+	
+<div class="col-md-9 w_content">
+	<div class="women">
+		<a href="#"><h4>{{gender}} - <span>{{c}}</span> </h4></a>
+		<ul class="w_nav">
+					<li>Sort : </li>
+	     			<li><a class="active" href="#">popular</a></li> |
+	     			<li><a href="#">new </a></li> |
+	     			<li><a href="#">discount</a></li> |
+	     			<li><a href="#">price: Low High </a></li> 
+	     			<div class="clear"></div>	
+	     </ul>
+	     <div class="clearfix"></div>	
+	</div>
+		<!-- grids_of_4 -->
 
-	<div class="clearfix"></div>
+   	    {%for product in product%}
+
+		<div class="grids_of_4">
+   	    <div class="grid1_of_4">
+
+
+				<div class="content_box">
+					<p><a href="/shop/clothing/details/{{product.id}}/"><img src="/media/{{image.img1}}" class="img-responsive" height=50px width=190px></a>
+				   	  </a>
+				    <h4><a href="/shop/clothing/details/{{product.id}}/"> {{product.pname}} </a></h4>
+				    
+					 <div class="grid_1 simpleCart_shelfItem">
+				    
+					 <div class="item_add"><span class="item_price"><h6>PHP {{product.price}}</h6></span></div>
+					</div></p>
+			   	</div>
+		</div>	
+
+		{%endfor%}
+		</div>
+		<!-- end grids_of_4 -->		
+</div>
+
+	<!-- end content -->
+<div class="clearfix"></div>
 	</div>
 </div>
 
 <!-- end content -->
 
-
+<div class="clearfix"></div>
 
 <div class="footer">
 	<div class="container">

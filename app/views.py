@@ -316,9 +316,9 @@ def sorder(request):
 
 
 	return render(request, 'shopowner/sorder.html', {'shopowner': shopowner, 'product': product, 'cart': cart})
-############################################################################
-############################################################################
-############################################################################
+########################    CUSTOMERS PAGE   ###############################
+########################    CUSTOMERS PAGE   ###############################
+########################    CUSTOMERS PAGE   ###############################
 
 def shop(request):
 	if request.user.is_authenticated() and request.user.is_Customer:
@@ -334,9 +334,10 @@ def allproducts(request):
 		product = Product.objects.filter(is_active=True)
 		image = Image.objects.filter(id=product)
 		category = Category.objects.all()
+		gender = Gender.objects.all()
 
 	return render(request, 'allproducts.html', {'customer': customer, 'product': product, 'image': image, 'c': c,
-		'category': category})
+		'category': category, 'gender': gender})
 
 def productdetails(request, pk):
 	if request.user.is_Customer:
@@ -351,8 +352,6 @@ def productdetails(request, pk):
 		if request.method == 'POST':
 			print "data added to cart"
 			customer.cart_set.create(cuid=customer, pid=pid, shop=shop, purdate=timezone.now())
-
-
 			return redirect('cart')		
 
 	return render(request, 'productdetails.html', {'customer': customer, 'product': product, 'image': image, 'category': category})
@@ -369,3 +368,65 @@ def checkout(request):
 		customer = MyUser.object.get(pk=request.user.id)
 	return render(request, 'checkout.html')
 
+##################### FILTER PRODUCTS BY GENDER ############################
+##################### FILTER PRODUCTS BY GENDER ############################
+##################### FILTER PRODUCTS BY GENDER ############################
+
+def productbygender(request,gid):
+	if request.user.is_Customer:
+		gender = Gender.objects.filter(pk=gid)
+		product = Product.objects.filter(is_active=True, sex=gid)
+		c = Product.objects.filter(is_active=True, sex=gid).count()
+		
+		category = Category.objects.all()
+		return render(request, 'productsbygender.html', {'product': product, 'category': category, 'gender': gender, 'c': c})
+
+# def tshirts(request):
+# 	return render(request, 'tshirts.html')
+
+##################### FILTER PRODUCTS BY CATEGORY ##########################
+##################### FILTER PRODUCTS BY CATEGORY ##########################
+##################### FILTER PRODUCTS BY CATEGORY ##########################
+
+def productbycategory(request,cid):
+	if request.user.is_Customer:
+		product = Product.objects.filter(is_active=True, cid=cid)
+		c = Product.objects.filter(is_active=True, cid=cid).count()
+		gender = Gender.objects.all()
+		category = Category.objects.all()
+		cname = Category.objects.filter(pk=cid)
+		return render(request, 'productbycategory.html', {'product': product, 'gender': gender, 'category': category, 'cname': cname, 'c': c})
+
+################ FILTER PRODUCTS BY GENDER AND CATEGORY ####################
+################ FILTER PRODUCTS BY GENDER AND CATEGORY ####################
+################ FILTER PRODUCTS BY GENDER AND CATEGORY ####################
+
+def productbygenderandcategory(request, gid,cid):
+	if request.user.is_Customer:
+		product = Product.objects.filter(is_active=True, sex=gid, cid=cid)
+		category = Category.objects.all()
+		gender = Gender.objects.filter(pk=gid)
+		return render(request, 'productbygenderandcategory.html', {'product': product, 'category': category, 'gender': gender})
+
+def shops(request):
+	if request.user.is_Customer:
+		shop = Shop.objects.all()
+		return render(request, 'shop/shopshomepage.html', {'shop': shop})
+
+def productbyshop(request, sid):
+	category = Category.objects.all()
+	gender = Gender.objects.all()
+	product = Product.objects.filter(is_active=True, shop=sid)
+
+	return render(request, 'shop/allproductsinshop.html', {'product': product, 'category': category, 'gender': gender})
+
+def productinshopbygender(request, sgid):
+	product = Product.objects.filter(is_active=True, sex=sgid, shop=sgid)
+
+	return render(request, 'productinshopbygender.html', {'product': product})
+
+def productinshopbycategory(request, scid):
+	return render(request, 'productinshopbycategory.html')
+
+def productinshopbygenderandcategory(request, sgcid):
+	return render(request, 'productinshopbygenderandcategory.html')

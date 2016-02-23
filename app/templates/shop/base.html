@@ -117,10 +117,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="w_nav1">
 			
 			<ul>
-				<li><a href="/shop/clothing/">all</a></li>
+				<li><a href="#">all</a></li>
 				<li><a href="#">new arrivals</a></li>
 				{%for gender in gender%}
-				<li><a href="/shop/clothing/gender/{{gender.id}}/">{{gender.gender}}</a></li>
+				<li><a href="/shop/clothing/{{gender.id}}/">{{gender.gender}}</a></li>
 				{%endfor%}
 
 			</ul>	
@@ -133,7 +133,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="row1 scroll-pane">
 							<div class="col col-4">
 								{%for category in category%}
-								<p><a href="/shop/clothing/category/{{category.id}}/">{{category.cname}}</a></p>
+								<p><a href="/shop/clothing/{{category.id}}/">{{category.cname}}</a></p>
 								{%endfor%}
 <!-- 								<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>kurtas</label> -->
 							</div>

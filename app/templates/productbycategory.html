@@ -5,7 +5,7 @@
 	
 <div class="col-md-9 w_content">
 	<div class="women">
-		<a href="#"><h4>All Products - <span>{{c}}</span> </h4></a>
+		<a href="#"><h4>{{cname}} - <span>{{c}}</span> </h4></a>
 		<ul class="w_nav">
 					<li>Sort : </li>
 	     			<li><a class="active" href="#">popular</a></li> |
@@ -18,7 +18,7 @@
 	</div>
 		<!-- grids_of_4 -->
    	    {%for product in product%}
-		{%for image in image%}
+
 		<div class="grids_of_4">
    	    <div class="grid1_of_4">
 
@@ -34,7 +34,7 @@
 					</div></p>
 			   	</div>
 		</div>	
-		{%endfor%}
+
 		{%endfor%}
 		</div>
 		<!-- end grids_of_4 -->		

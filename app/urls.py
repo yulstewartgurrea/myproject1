@@ -47,6 +47,14 @@ urlpatterns += patterns('',
 	url(r'^shop/clothing/$', 'app.views.allproducts', name='allproducts'),
 	url(r'^shop/clothing/details/(?P<pk>\d+)/$', 'app.views.productdetails', name='productdetails'),
 	url(r'^cart/$', 'app.views.cart', name='cart'),
+	url(r'^shop/clothing/gender/(?P<gid>\d+)/$', 'app.views.productbygender', name='productbygender'),
+	url(r'^shop/clothing/category/(?P<cid>\d+)/$', 'app.views.productbycategory', name='productbycategory'),
+	url(r'^shop/clothing/gender/category/(?P<gid>\d+)/(?P<cid>\d+)/$', 'app.views.productbygenderandcategory', name='productbygenderandcategory'),
+	url(r'^shop/clothing/(?P<sid>\d+)/$', 'app.views.productbyshop', name='productbyshop'),
+	url(r'^shops/$', 'app.views.shops', name='shops'),
+	url(r'^shop/clothing/(?P<sgid>\d+)/$', 'app.views.productinshopbygender', name='productinshopbygender'),
+	url(r'^shop/clothing/(?P<scid>\d+)/$', 'app.views.shops', name='shops'),
+	url(r'^shop/clothing/(?P<sgcid>\d+)/$', 'app.views.shops', name='shops'),
 
 
 )

@@ -93,7 +93,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<li><a class="color6" href="#">SHOES</a></li>				
 			<li><a class="color8" href="#">T-SHIRT</a></li>
 			<li><a class="color9" href="#">WATCHES</a></li>
-			<li><a class="color9" href="/shops/">SHOPS</a></li>
+			<li><a class="color9" href="#">SHOPS</a></li>
 				
 					<div class="row">
 						<div class="col1"></div>
@@ -114,26 +114,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- start sidebar -->
 	<div class="col-md-3 s-d">
 	  <div class="w_sidebar">
-		<div class="w_nav1">
-			
-			<ul>
-				<li><a href="/shop/clothing/">all</a></li>
-				<li><a href="#">new arrivals</a></li>
-				{%for gender in gender%}
-				<li><a href="/shop/clothing/gender/{{gender.id}}/">{{gender.gender}}</a></li>
-				{%endfor%}
-
-			</ul>	
-			
-			
-		</div>
-		<h3>filter by</h3>
 		<section  class="sky-form">
-					<h4>categories</h4>
+					<h4>Shops</h4>
 						<div class="row1 scroll-pane">
 							<div class="col col-4">
-								{%for category in category%}
-								<p><a href="/shop/clothing/category/{{category.id}}/">{{category.cname}}</a></p>
+								{%for shop in shop%}
+								<p><a href="/shop/clothing/{{shop.id}}/">{{shop.sname}}</a></p>
 								{%endfor%}
 <!-- 								<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>kurtas</label> -->
 							</div>
