@@ -57,7 +57,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="header">
 	<div class="head-t">
 		<div class="logo">
-			<a href="/home/"><img src="{% static "images/logo.png" %}" class="img-responsive" alt=""/> </a>
+			{%for shop in shop%}
+			<a href="/shop/clothing/{{shop.id}}/"><img src="/media/{{shop.logo}}/" class="img-responsive" alt="" width=182/> </a>
+			{%endfor%}
 		</div>
 		<!-- start header_right -->
 		<div class="header_right">
@@ -117,11 +119,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="w_nav1">
 			
 			<ul>
-				<li><a href="#">all</a></li>
-				<li><a href="#">new arrivals</a></li>
-				{%for gender in gender%}
-				<li><a href="/shop/clothing/{{gender.id}}/">{{gender.gender}}</a></li>
+				{%for shop in shop%}
+				<li><a href="/shop/clothing/{{shop.id}}/">all</a></li>
 				{%endfor%}
+				<li><a href="#">new arrivals</a></li>
+				{%for shop in shop%}
+				{%for gender in gender%}
+				<li><a href="/shop/clothing/shop/gender/{{shop.id}}/{{gender.id}}/">{{gender.gender}}</a></li>
+				{%endfor%}
+				{%endfor%}
+
 
 			</ul>	
 			
@@ -132,8 +139,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<h4>categories</h4>
 						<div class="row1 scroll-pane">
 							<div class="col col-4">
+								{%for shop in shop%}
 								{%for category in category%}
-								<p><a href="/shop/clothing/{{category.id}}/">{{category.cname}}</a></p>
+								<p><a href="/shop/clothing/shop/category/{{shop.id}}/{{category.id}}/">{{category.cname}}</a></p>
+								{%endfor%}
 								{%endfor%}
 <!-- 								<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>kurtas</label> -->
 							</div>

@@ -132,6 +132,7 @@ class Shop(models.Model):
     sname = models.CharField(max_length=120, default="None")
     sid = models.ForeignKey(MyUser)
     is_active = models.BooleanField(default=True)
+    logo = models.FileField(upload_to='pimages', default="pimages/noimage.jpg")
 
     def __unicode__(self):
         return self.sname
@@ -159,6 +160,7 @@ class Product(models.Model):
     sex = models.ForeignKey(Gender, null=True, blank=True)
     shop = models.ForeignKey(Shop, null=True, blank=True)
     price = models.DecimalField(max_digits=20, decimal_places=2, default=0.00)
+    
 
     def __unicode__(self):
         return self.pname

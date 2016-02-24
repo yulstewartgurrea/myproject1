@@ -50,11 +50,11 @@ urlpatterns += patterns('',
 	url(r'^shop/clothing/gender/(?P<gid>\d+)/$', 'app.views.productbygender', name='productbygender'),
 	url(r'^shop/clothing/category/(?P<cid>\d+)/$', 'app.views.productbycategory', name='productbycategory'),
 	url(r'^shop/clothing/gender/category/(?P<gid>\d+)/(?P<cid>\d+)/$', 'app.views.productbygenderandcategory', name='productbygenderandcategory'),
-	url(r'^shop/clothing/(?P<sid>\d+)/$', 'app.views.productbyshop', name='productbyshop'),
+	url(r'^shop/clothing/(?P<shid>\d+)/$', 'app.views.productbyshop', name='productbyshop'),
 	url(r'^shops/$', 'app.views.shops', name='shops'),
-	url(r'^shop/clothing/(?P<sgid>\d+)/$', 'app.views.productinshopbygender', name='productinshopbygender'),
-	url(r'^shop/clothing/(?P<scid>\d+)/$', 'app.views.shops', name='shops'),
-	url(r'^shop/clothing/(?P<sgcid>\d+)/$', 'app.views.shops', name='shops'),
+	url(r'^shop/clothing/shop/gender/(?P<shid>\d+)/(?P<sid>\d+)/$', 'app.views.productinshopbygender', name='productinshopbygender'),
+	url(r'^shop/clothing/shop/category/(?P<shid>\d+)/(?P<cid>\d+)/$', 'app.views.productinshopandcategory', name='productbyshopandcategory'),
+	url(r'^shop/clothing/shop/gender/category/(?P<shid>\d+)/(?P<sid>\d+)/(?P<cid>\d+)/$', 'app.views.productinshopbygenderandcategory', name='productinshopbygenderandcategory'),
 
 
 )

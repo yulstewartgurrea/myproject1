@@ -75,8 +75,8 @@ def home(request):
 def login_error(request):
 	return render(request, 'registration/login_error.html')
 
-############################################################################
-############################################################################
+#####################   ADMIN ADMIN ADMIN  #################################
+#####################   ADMIN ADMIN ADMIN  #################################
 #####################   ADMIN ADMIN ADMIN  #################################
 
 def admin_dashboard(request):
@@ -144,8 +144,8 @@ def add_product(request):
 
 	return render(request, 'admin/addproduct.html', {'form': form})
 
-############################################################################
-############################################################################
+#####################SHOP OWNER SHOP OWNER##################################
+#####################SHOP OWNER SHOP OWNER##################################
 #####################SHOP OWNER SHOP OWNER##################################
 
 def shopowner_dashboard(request):
@@ -408,25 +408,41 @@ def productbygenderandcategory(request, gid,cid):
 		gender = Gender.objects.filter(pk=gid)
 		return render(request, 'productbygenderandcategory.html', {'product': product, 'category': category, 'gender': gender})
 
+########################## SHOP OF SHOPOWNER ##############################
+########################## SHOP OF SHOPOWNER ##############################
+########################## SHOP OF SHOPOWNER ##############################
+
 def shops(request):
 	if request.user.is_Customer:
-		shop = Shop.objects.all()
+		shop = Shop.objects.filter(is_active=True)
 		return render(request, 'shop/shopshomepage.html', {'shop': shop})
 
-def productbyshop(request, sid):
+def productbyshop(request, shid):
 	category = Category.objects.all()
 	gender = Gender.objects.all()
-	product = Product.objects.filter(is_active=True, shop=sid)
+	product = Product.objects.filter(is_active=True, shop=shid)
+	shop = Shop.objects.filter(pk=shid)
 
-	return render(request, 'shop/allproductsinshop.html', {'product': product, 'category': category, 'gender': gender})
+	return render(request, 'shop/allproductinshop.html', {'product': product, 'category': category, 'gender': gender, 'shop': shop})
 
-def productinshopbygender(request, sgid):
-	product = Product.objects.filter(is_active=True, sex=sgid, shop=sgid)
+def productinshopbygender(request,shid, sid):
+	product = Product.objects.filter(is_active=True, shop=shid, sex=sid)
+	category = Category.objects.all()
+	gender = Gender.objects.filter(pk=sid)
+	shop = Shop.objects.filter(pk=shid)
 
-	return render(request, 'productinshopbygender.html', {'product': product})
+	return render(request, 'shop/productinshopbygender.html', {'product': product, 'gender': gender, 'category': category, 'shop': shop})
 
-def productinshopbycategory(request, scid):
-	return render(request, 'productinshopbycategory.html')
+def productinshopandcategory(request, shid, cid):
+	product = Product.objects.filter(is_active=True, shop=shid, cid=cid)
+	category = Category.objects.all()
+	gender = Gender.objects.all()
+	shop = Shop.objects.filter(pk=shid)
+	return render(request, 'shop/productinshopbycategory.html', {'product': product, 'gender': gender, 'category': category, 'shop': shop})
 
-def productinshopbygenderandcategory(request, sgcid):
-	return render(request, 'productinshopbygenderandcategory.html')
+def productinshopbygenderandcategory(request, shid, sid, cid):
+	product = Product.objects.filter(is_active=True, shop=shid, sex=sid, cid=cid )
+	gender = Gender.objects.filter(pk=sid)
+	category = Category.objects.all()
+	shop = Shop.objects.filter(pk=shid)
+	return render(request, 'shop/productinshopbygenderandcategory.html', {'shop': shop, 'product': product, 'gender': gender, 'category': category})
